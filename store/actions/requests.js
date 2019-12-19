@@ -12,7 +12,7 @@ export const getCoordinates = (requests) => {
     return dispatch => {
         let cityCoordinates = [];
         for (let i = 0; i < requests.length; i++) {
-            axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${requests[i].location}&key=AIzaSyBKTFFfigRBdD_eqXlrRXedMMKYhT7RgWE`)
+            axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${requests[i].location}&key=//insertAPIkey//`)
                 .then(r => r.data)
                 .then(data => {
                     let longitude = data.results[0].geometry.location.lng;
