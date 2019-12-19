@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     requestItem: {
         width: '100%',
         height: 100,
-        backgroundColor: Colors.backColor,
+        backgroundColor: "white",
         fontSize: 10,
 
     },

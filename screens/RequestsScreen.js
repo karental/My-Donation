@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, FlatList, Button, StyleSheet } from 'react-native';
+import { View, FlatList, Button, StyleSheet, Platform } from 'react-native';
 import { useSelector } from 'react-redux';
 import Colors from '../constants/Colors';
 import RequestsItem from '../components/RequstsItem';
 import { useDispatch } from 'react-redux';
 import { getCoordinates } from '../store/actions/requests';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import HeaderButton from '../components/UI/HeaderButton';
 
 const RequestScreen = props => {
     const renderRequests = itemData => {
@@ -31,13 +33,31 @@ const RequestScreen = props => {
     );
 };
 
-RequestScreen.navigationOptions = {
-    headerTitle: 'Requests',
-    headerStyle: {
-        backgroundColor: Colors.primaryColor
-    },
-    headerTintColor: Colors.fontColor
-};
+RequestScreen.navigationOptions = navData => {
+    return {
+        headerTitle: 'Requests',
+        headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+                title="User"
+                size={30}
+                iconName={Platform.OS === 'android' ? 'md-person' : 'ios-person'}
+                onPress={() => { }} />
+        </HeaderButtons>,
+        headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+                title="Menu"
+                size={30}
+
+                iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+                onPress={() => { navData.navigation, toggleDrawer(); }} />
+        </HeaderButtons>,
+
+        headerStyle: {
+            backgroundColor: Colors.primaryColor
+        },
+        headerTintColor: Colors.fontColor
+    };
+}
 
 const styles = StyleSheet.create({
     screen: {

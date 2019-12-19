@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Alert, ActivityIndicator } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Colors from '../constants/Colors';
 
 
 const MyLocation = props => {
