@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
-import Header from './components/Header';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import requestReducer from './store/reducers/requests';
-import RequestNavigator from './navigation/RequestNavigation';
+import Navigator from './navigation/Navigation';
+
 import { Provider } from 'react-redux';
-import thunk  from 'redux-thunk'
+import thunk from 'redux-thunk'
 
 const rootReducer = combineReducers({
   requests: requestReducer
@@ -30,7 +30,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <RequestNavigator />
+      <Navigator />
     </Provider>
   );
 }

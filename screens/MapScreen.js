@@ -7,6 +7,7 @@ import MapView, { Marker } from 'react-native-maps';
 
 const MapScreen = props => {
     const locationCoordinators = useSelector(state => state.requests.cityCoordiantes);
+
     const mapRegion = {
         latitude: 31.771959,
         longitude: 35.217018,
@@ -19,19 +20,15 @@ const MapScreen = props => {
             style={styles.map}
             region={mapRegion}>
             {locationCoordinators.map(c =>
-                <Marker key={c.longitude} title={c.title} coordinate={c}></Marker>
+                <Marker key={c.longitude} title={c.title} coordinate={c}
+                onPress={() => {props.navigation.navigate('requestInforamation', {request: c.title }) }}
+
+                ></Marker>
             )}
         </MapView>
     );
 };
 
-MapScreen.navigationOptions = {
-    headerTitle: 'Map',
-    headerStyle: {
-        backgroundColor: Colors.primaryColor
-    },
-    headerTintColor: Colors.fontColor
-};
 
 const styles = StyleSheet.create({
     map: {

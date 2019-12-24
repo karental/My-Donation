@@ -1,16 +1,19 @@
 import React from 'react';
 import { View, FlatList, Button, StyleSheet, Platform } from 'react-native';
-import { useSelector } from 'react-redux';
-import Colors from '../constants/Colors';
-import RequestsItem from '../components/RequstsItem';
-import { useDispatch } from 'react-redux';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { getCoordinates } from '../store/actions/requests';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import HeaderButton from '../components/UI/HeaderButton';
+
+import RequestsItem from '../components/RequstsItem';
+
 
 const RequestScreen = props => {
     const renderRequests = itemData => {
-        return (<RequestsItem title={itemData.item.title} location={itemData.item.location} onSelectRequest={() => { }}></RequestsItem>);
+        return (
+            <RequestsItem
+                title={itemData.item.title}
+                location={itemData.item.location}
+                onSelectRequest={() => {props.navigation.navigate('requestInforamation', {request: itemData.item.title }) }}></RequestsItem>);
     };
     const dispatch = useDispatch();
 
@@ -26,44 +29,17 @@ const RequestScreen = props => {
                 renderItem={renderRequests}
                 style={{ width: '100%' }}
             ></FlatList>
-            <Button title='go to Map' onPress={() => {
-                props.navigation.navigate({ routeName: 'MapDestinations' });
-            }} />
         </View>
     );
 };
 
-RequestScreen.navigationOptions = navData => {
-    return {
-        headerTitle: 'Requests',
-        headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item
-                title="User"
-                size={30}
-                iconName={Platform.OS === 'android' ? 'md-person' : 'ios-person'}
-                onPress={() => { }} />
-        </HeaderButtons>,
-        headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item
-                title="Menu"
-                size={30}
-
-                iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-                onPress={() => { navData.navigation, toggleDrawer(); }} />
-        </HeaderButtons>,
-
-        headerStyle: {
-            backgroundColor: Colors.primaryColor
-        },
-        headerTintColor: Colors.fontColor
-    };
-}
 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: "center",
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: 30
     }
 });
 

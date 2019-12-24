@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
-import Colors from '../constants/Colors'
 
 const RequestsItem = props => {
 
@@ -25,18 +24,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     requestItem: {
-        width: '100%',
+        borderRadius: 20,
         height: 100,
+        margin: 10,
         backgroundColor: "white",
         fontSize: 10,
-
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     },
     requestHeader: {
+        borderTopEndRadius:20,
+        borderTopStartRadius: 20,
         height: '50%',
-        color: Colors.fontColor,
-        backgroundColor: Colors.accentColor
+        padding: 5,
+       backgroundColor: "#E7E7E7"
     },
     requestDetails: {
+        padding: 3,
 
     }
 });
