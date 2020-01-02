@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, FlatList, Button, StyleSheet, Platform } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getCoordinates } from '../store/actions/requests';
-
+import * as requestActions from '../store/actions/requests'
 import RequestsItem from '../components/RequstsItem';
-
 
 const RequestScreen = props => {
     const renderRequests = itemData => {
@@ -13,12 +12,15 @@ const RequestScreen = props => {
             <RequestsItem
                 title={itemData.item.title}
                 location={itemData.item.location}
-                onSelectRequest={() => {props.navigation.navigate('requestInforamation', {request: itemData.item.title }) }}></RequestsItem>);
+                onSelectRequest={() => { props.navigation.navigate('requestInforamation', { request: itemData.item.title }) }}></RequestsItem>);
     };
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(requestActions.fetchRequests());
+    }, [dispatch]);
 
     const avalibleRequests = useSelector(state => state.requests.requests);
-    dispatch(getCoordinates(avalibleRequests));
+    dispatch(requestActions.getCoordinates(avalibleRequests));
 
 
     return (

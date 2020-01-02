@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet} from 'react-native';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import requestReducer from './store/reducers/requests';
 import Navigator from './navigation/Navigation';

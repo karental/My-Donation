@@ -9,7 +9,10 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import RequestsScreen from '../screens/RequestsScreen';
 import MapScreen from '../screens/MapScreen';
 import informationScreen from '../screens/informationScreen';
-import LoginScreen from '../screens/LoginScreen';
+import UserScreen from '../screens/UserScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+import AddRequestScreen from '../screens/AddRequestScreen';
+import Gradiant from '../components/Gradiant';
 
 import Colors from '../constants/Colors';
 
@@ -25,7 +28,19 @@ const informationNavigator = createStackNavigator(
         },
     }
 });
-
+const userNavigator = createStackNavigator(
+    {
+        Login: Gradiant,
+        UserPage: UserScreen,
+        SignUp: SignUpScreen
+    }, {
+    defaultNavigationOptions: {
+        headerStyle: {
+            shadowOpacity: 0,
+            height: 2
+        },
+    }
+});
 const informationNavigatorfromMap = createStackNavigator(
     {
         Map: MapScreen,
@@ -49,8 +64,7 @@ const bottomTabNavigator = createBottomTabNavigator(
                     <Icon name="home" size={25} color={tintColor} />
                 )
             }
-        }
-        ,
+        },
         Map: {
             screen: informationNavigatorfromMap,
             navigationOptions: {
@@ -60,10 +74,18 @@ const bottomTabNavigator = createBottomTabNavigator(
             }
         },
         Login: {
-            screen: LoginScreen,
+            screen: userNavigator,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <Icon name="user" size={25} color={tintColor} />
+                )
+            }
+        },
+        Add: {
+            screen: AddRequestScreen,
+            navigationOptions: {
+                tabBarIcon: ({ tintColor }) => (
+                    <Icon name="plus" size={25} color={tintColor} />
                 )
             }
         },
