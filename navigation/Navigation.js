@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 
@@ -12,7 +12,7 @@ import informationScreen from '../screens/informationScreen';
 import UserScreen from '../screens/UserScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import AddRequestScreen from '../screens/AddRequestScreen';
-import Gradiant from '../components/Gradiant';
+import LoginScreen from '../screens/LoginScreen';
 
 import Colors from '../constants/Colors';
 
@@ -30,7 +30,7 @@ const informationNavigator = createStackNavigator(
 });
 const userNavigator = createStackNavigator(
     {
-        Login: Gradiant,
+        Login: LoginScreen,
         UserPage: UserScreen,
         SignUp: SignUpScreen
     }, {
@@ -48,7 +48,7 @@ const informationNavigatorfromMap = createStackNavigator(
     }, {
     defaultNavigationOptions: {
         headerStyle: {
-            marginTop:10,
+            marginTop: 10,
             shadowOpacity: 0,
             height: 2
         },
@@ -99,7 +99,13 @@ const bottomTabNavigator = createBottomTabNavigator(
         }
     }
 );
-const AppContainer = createAppContainer(bottomTabNavigator);
+
+const MainNavigator = createSwitchNavigator({
+Auth: userNavigator,
+App: bottomTabNavigator
+});
+
+const AppContainer = createAppContainer(MainNavigator);
 
 
 export default createAppContainer(AppContainer);

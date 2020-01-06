@@ -2,37 +2,39 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import { Input, Text } from "galio-framework";
-import Button from '../components/Button';
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const Login = props => {
 
-        return (
+    return (
 
-            <View style={styles.Container}>
-                <Icon name="user-circle" size={90} style={styles.icon} />
-                <Text style={{ color: 'white', margin: 20 }}>MEMBER LOGIN</Text>
-                <Input
-                    placeholder="User Name"
-                    style={styles.input}
-                />
-                <Input
-                    style={styles.input}
-                    placeholder="Password"
-                />
-            </View>
+        <View style={styles.Container}>
+            <Icon name="user-circle" size={90} style={styles.icon} />
+            <Text style={{ color: 'white', margin: 20 }}>MEMBER LOGIN</Text>
+            <Input
+                placeholder="User Name"
+                style={styles.input}
+                onInputChange={props.inputChangeHandler}
+            />
+            <Input
+                style={styles.input}
+                placeholder="Password"
+                autoCompleteType='password'
+                onInputChange={props.inputChangeHandler}
+            />
+        </View>
 
-        )
-    
+    )
+
 };
 const styles = StyleSheet.create({
     Container: {
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
         marginTop: '40%'
     },
-    loginButton:{
+    loginButton: {
         margin: 20,
         width: '80%',
         fontSize: 30

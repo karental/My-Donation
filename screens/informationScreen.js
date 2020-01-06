@@ -12,7 +12,6 @@ const InformationPage = props => {
     const selectedcoordinates = useSelector(state =>
         state.requests.cityCoordiantes.find(req => req.title === itemName)
     );
-    console.log(selectedcoordinates)
 
     return (
         <View style={styles.requestItem}>
