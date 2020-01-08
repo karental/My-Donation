@@ -4,11 +4,13 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import requestReducer from './store/reducers/requests';
 import Navigator from './navigation/Navigation';
 
+import authReducer from './store/reducers/auth'
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk'
 
 const rootReducer = combineReducers({
-  requests: requestReducer
+  requests: requestReducer,
+  auth: authReducer
 });
 
 const store = createStore(rootReducer,
@@ -25,7 +27,6 @@ export default function App() {
   const addTextHandler = () => {
     setCard([...card,
     { key: Math.random().toString(), value: enteredTextCard }])
-    console.log(card)
   }
 
   return (

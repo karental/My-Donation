@@ -13,6 +13,7 @@ import UserScreen from '../screens/UserScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import AddRequestScreen from '../screens/AddRequestScreen';
 import LoginScreen from '../screens/LoginScreen';
+import StartScreen from '../screens/StartScreen';
 
 import Colors from '../constants/Colors';
 
@@ -73,8 +74,8 @@ const bottomTabNavigator = createBottomTabNavigator(
                 )
             }
         },
-        Login: {
-            screen: userNavigator,
+        User: {
+            screen: UserScreen,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <Icon name="user" size={25} color={tintColor} />
@@ -101,8 +102,9 @@ const bottomTabNavigator = createBottomTabNavigator(
 );
 
 const MainNavigator = createSwitchNavigator({
-Auth: userNavigator,
-App: bottomTabNavigator
+    Start: StartScreen,
+    Auth: userNavigator,
+    App: bottomTabNavigator
 });
 
 const AppContainer = createAppContainer(MainNavigator);

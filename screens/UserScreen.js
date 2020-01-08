@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { useDispatch } from "react-redux";
+import * as authActions from "../store/actions/auth";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Colors from '../constants/Colors';
+import Button from '../components/Button';
 
 const UserScreen = props => {
-
+    const dispatch = useDispatch();
     return <View>
         <View style={styles.FilterIcon}>
             <Icon name="sliders" size={30} color='grey' />
@@ -28,6 +31,11 @@ const UserScreen = props => {
         <View style={styles.Subtitle}>
             <Text>Donation History</Text>
         </View>
+        <Button color="error" 
+        onPress={() => {
+             dispatch(authActions.logout());
+             props.navigation.navigate('Auth');
+             }} >Logout</Button>
     </View>
 };
 const styles = StyleSheet.create({

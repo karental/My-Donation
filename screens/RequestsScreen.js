@@ -10,6 +10,7 @@ const RequestScreen = props => {
     const renderRequests = itemData => {
         return (
             <RequestsItem
+                key={itemData.item.id}
                 title={itemData.item.title}
                 location={itemData.item.location}
                 onSelectRequest={() => { props.navigation.navigate('requestInforamation', { request: itemData.item.title }) }}></RequestsItem>);
@@ -24,7 +25,7 @@ const RequestScreen = props => {
 
 
     return (
-        <View style={styles.screen}>
+        <View style={styles.screen} key={'1'}>
             <FlatList
                 data={avalibleRequests}
                 keyExtractor={(item) => item.id}

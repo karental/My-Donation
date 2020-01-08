@@ -1,5 +1,5 @@
-import React, { useReducer, useCallback } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import React, { useReducer, useCallback, useState, useEffect } from 'react';
+import { View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { Text } from "galio-framework";
 import MyInput from "../components/UI/Input"
 import { useDispatch } from 'react-redux';
@@ -37,6 +37,8 @@ const formReducer = (state, action) => {
 };
 
 const Login = props => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState()
   const dispatch = useDispatch();
 
   const [formState, dispatchformState] = useReducer(formReducer, {
@@ -50,18 +52,28 @@ const Login = props => {
     },
     formIsValid: false
   })
-
-  const signupHandler = () => {
-    dispatch(
-      authActions.signup(
-        formState.inputValues.email,
-        formState.inputValues.password)
-    );
+useEffect(()=>{
+  if(error){
+    Alert.alert('An Error Occurred', error,  [{ text: 'Okay' }])
+  }
+})
+  const signupHandler = async () => {
+    setError(null)
+    setIsLoading(true);
+    try {
+      await dispatch(
+        authActions.login(
+          formState.inputValues.email,
+          formState.inputValues.password)
+      );
+      props.navigation.navigate('App')
+    } catch (err) {
+      setError(err.message)
+      setIsLoading(false)
+    }
   };
 
   const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
-    console.log( inputIdentifier, inputValue, inputValidity);
-    
     dispatchformState({
       type: REDUCER_UPDATE,
       value: inputValue,
@@ -106,13 +118,14 @@ const Login = props => {
             password
           />
         </View>
-        <Button style={styles.loginButton} color="default" onPress={signupHandler}>Login</Button>
+        {isLoading ? (<ActivityIndicator size="large" color={Colors.primaryColor} />) : (
+          <Button style={styles.loginButton} color="default" onPress={signupHandler}>Login</Button>)}
         <View ><Text style={styles.SignIn} onPress={() => { props.navigation.navigate('SignUp') }}>Don't Have a User? Sign in!</Text></View>
       </LinearGradient>
     </View>
   );
 }
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   loginButton: {
     width: '80%',
     fontSize: 30,

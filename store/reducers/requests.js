@@ -21,8 +21,15 @@ export default function requestReducer(state = initialState, action) {
                 ...state,
                 cityCoordiantes: action.coordinates
             }
-        case CREATE_REQUEST:
-            const newRequest = new Request(action.requestData.id, action.requestData.title, action.requestData.location, action.requestData.description, action.requestData.organization);
+        case CREATE_REQUEST:            
+            const newRequest = new Request(
+                action.requestData.id, 
+                action.requestData.title, 
+                action.requestData.location, 
+                action.requestData.description, 
+                action.requestData.organization,
+                action.requestData.date,
+                );
             return {
                 ...state,
                 requests: state.requests.concat(newRequest),

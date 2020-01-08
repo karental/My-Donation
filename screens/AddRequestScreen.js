@@ -42,13 +42,13 @@ const AddRequestScreen = props => {
     const [formState, dispatchformState] = useReducer(formReducer, {
         inputValues: {
             title: '',
-            Location: '',
+            location: '',
             description: '',
             organization: ''
         },
         inputValidities: {
             title: false,
-            Location: false,
+            location: false,
             description: false,
             organization: false
         },
@@ -87,7 +87,6 @@ const AddRequestScreen = props => {
                     returnKeyType="next"
                     onInputChange={inputChangeHandler}
                     initialValue=''
-                    initiallyValid={false}
                     required
                     style={styles.input}
                 />
@@ -113,9 +112,9 @@ const AddRequestScreen = props => {
                     style={styles.input}
                     required
                 />
-                <MyInput label='Organizaton'
-                    id='organizaton'
-                    errorText='please enter a valid organizaton!'
+                <MyInput label='Organization'
+                    id='organization'
+                    errorText='please enter a valid organization!'
                     keyboardType="default"
                     autoCapitalize='sentences'
                     autoCorrect

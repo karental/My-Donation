@@ -14,15 +14,15 @@ function getLocations(coordinates) {
     }
 }
 
-export const fetchRequests =() =>{
-return async dispatch => {
-        const response = await fetch('https://my-donation-f13d6.firebaseio.com/requests.json');
+export const fetchRequests = () => {
+    return async dispatch => {
+        const response = await fetch('https://my-donation-f13d6.firebaseio.com/requests/r1.json');
         const resData = await response.json();
         const loadedRequests = [];
-        for( const key in resData){
+        for (const key in resData) {
             loadedRequests.push(new Request(key, resData[key].title, resData[key].location, resData[key].description, resData[key].organization))
         }
-        dispatch({type: SET_REQUESTS, requests: loadedRequests});
+        dispatch({ type: SET_REQUESTS, requests: loadedRequests });
     }
 }
 
@@ -47,8 +47,11 @@ export const getCoordinates = (requests) => {
 }
 
 export const createRequest = (title, location, description, organization) => {
-    return async dispatch => {
-        const response = await fetch('https://my-donation-f13d6.firebaseio.com/requests.json', {
+    return async (dispatch, getState) => {
+        const date = new Date();
+        const orgId = getState().auth.userId
+        const token = getState().auth.token;
+        const response = await fetch(`https://my-donation-f13d6.firebaseio.com/requests/${orgId}.json?auth=${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -57,19 +60,23 @@ export const createRequest = (title, location, description, organization) => {
                 title,
                 location,
                 description,
-                organization
+                organization,
+                date: date.toISOString,
+                orgId: orgId
             })
         });
 
         const resData = await response.json();
-       
         dispatch({
             type: CREATE_REQUEST, requestData: {
                 id: resData.name,
                 title,
                 location,
                 description,
-                organization
+                organization,
+                date: date,
+                orgId: orgId
+
             }
         });
     }

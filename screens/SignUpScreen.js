@@ -1,30 +1,33 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
+import { useDispatch } from 'react-redux';
+import * as authActions from '../store/actions/auth';
+
 import { Input, Text } from "galio-framework";
+
 import Button from '../components/Button';
+import OrgSignIn from '../components/OrgSignIn';
+import UserSignIn from '../components/UserSignIn';
 
-import OrgSignIn from '../components/OrgSignIn'
-import UserSignIn from '../components/UserSignIn'
 
-import ModalDropdown from 'react-native-modal-dropdown';
 class SignUpScreen extends React.Component {
     constructor() {
         super();
         this.state = {
             UserShow: true,
             OrgShow: false
-
         };
     }
-    ShowHideComponent = () => {
-        if (this.state.UserShow == true) {
-            this.setState({ OrgShow: true });
-            this.setState({ UserShow: false });
 
-        } else if(this.state.OrgShow ==true){
+    ShowHideComponent = (userType) => {
+        if (userType == 'helper') {
             this.setState({ OrgShow: false });
             this.setState({ UserShow: true });
+
+        } else if (userType == 'organization') {
+            this.setState({ OrgShow: true });
+            this.setState({ UserShow: false });
 
         }
     };
@@ -34,8 +37,8 @@ class SignUpScreen extends React.Component {
             <View style={styles.Container}>
                 <View><Text>Hey! Thanks for being here:) {"\n"}So what are you?</Text></View>
                 <View style={styles.UserType}>
-                    <Button style={styles.optionButton} color='default' onPress={this.ShowHideComponent} >HELPER</Button>
-                    <Button style={styles.optionButton} color='success' onPress={this.ShowHideComponent} >ORGANIZATION</Button>
+                    <Button style={styles.optionButton} color='default' onPress={this.ShowHideComponent.bind(this, 'helper')} >HELPER</Button>
+                    <Button style={styles.optionButton} color='success' onPress={this.ShowHideComponent.bind(this,'organization')} >ORGANIZATION</Button>
                 </View>
                 {this.state.UserShow ? (
                     <UserSignIn />

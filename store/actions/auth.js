@@ -1,5 +1,13 @@
-export const SIGNUP = 'SIGNUP';
-export const LOGIN = 'LOGIN';
+import { AsyncStorage } from 'react-native';
+
+export const AUTHENTICATE = 'AUTHENTICATE';
+export const LOGOUT = 'LOGOUT';
+
+export const authenticate = (userId, token) => {
+    return {
+        type: AUTHENTICATE, userId: userId, token: token
+    }
+};
 
 export const signup = (email, password) => {
     return async dispatch => {
@@ -17,9 +25,19 @@ export const signup = (email, password) => {
                 })
             }
         );
-
+        if (!response.ok) {
+            const errorrResData = await response.json();
+            const errorId = errorrResData.error.messagel
+            let message = 'Something went wrong!';
+            if (errorId === 'EMAIL_EXISTS') {
+                message = 'This email esits already'
+            }
+            throw new Error(message)
+        }
         const resData = await response.json();
-        dispatch({ type: SIGNUP });
+        dispatch(authenticate(resData.localId, resData.idToken));
+        const expiratonDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000)
+        saveDataToStorage(resData.idToken, resData.localId, expiratonDate)
     };
 };
 
@@ -39,9 +57,35 @@ export const login = (email, password) => {
                 })
             }
         );
+        if (!response.ok) {
+            const errorrResData = await response.json();
+            const errorId = errorrResData.error.messagel
+            let message = 'Something went wrong!';
+            if (errorId === 'EMAIL_NOT_FOUND') {
+                message = 'This email could not be found'
+            }
+            else if (errorId === 'INVALID_PASSWORD') {
+                message = 'This password is not valid';
+            }
+            throw new Error(message)
+        }
 
         const resData = await response.json();
-        console.log(resData);
-        dispatch({ type: SIGNUP });
+        dispatch(authenticate(resData.localId, resData.idToken));
+        const expiratonDate = new Date(new Date().getTime() + parseInt(resData.expiresIn) * 1000)
+        saveDataToStorage(resData.idToken, resData.localId, expiratonDate)
     };
 };
+
+export const logout = () => {
+    return { type: LOGOUT };
+}
+
+const saveDataToStorage = (token, userId, expiratonDate) => {
+
+    AsyncStorage.setItem('userData', JSON.stringify({
+        token: token,
+        userId: userId,
+        expireLoginDate: expiratonDate.toISOString()
+    }))
+}
